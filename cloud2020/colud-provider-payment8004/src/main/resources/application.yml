@@ -1,0 +1,28 @@
+server:
+  port: 8004
+
+spring:
+  application:
+    name: cloud-payment-service
+    #注册zookeeper
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+  datasource:
+    #当前数据源操作类型
+    type: com.alibaba.druid.pool.DruidDataSource
+    #mysql驱动包
+    driver-class-name: org.gjt.mm.mysql.Driver
+    url: jdbc:mysql://localhost:3306/cloud2020?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+    druid:
+      max-active: 200
+      max-wait: 60000
+      max-pool-prepared-statement-per-connection-size: 200
+
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+  #所有entity别名类所在包
+  type-aliases-package: com.george.springcloud.entities

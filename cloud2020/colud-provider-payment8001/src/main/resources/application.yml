@@ -1,5 +1,6 @@
 server:
   port: 8001
+
 spring:
   application:
     name: cloud-payment-service
@@ -21,3 +22,15 @@ mybatis:
   mapperLocations: classpath:mapper/*.xml
   #所有entity别名类所在包
   type-aliases-package: com.george.springcloud.entities
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
+      #defaultZone: http://localhost:7001/eureka
+  instance:
+    instance-id: payment8001
+    #访问路径显示ip
+    prefer-ip-address: true

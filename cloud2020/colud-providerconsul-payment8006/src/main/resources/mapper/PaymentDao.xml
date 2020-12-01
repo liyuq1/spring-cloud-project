@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.springcloud.dao.PaymentDao">
+
+    <resultMap type="com.atguigu.springcloud.entity.Payment" id="PaymentMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="serial" column="serial" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="PaymentMap">
+        select
+          id, serial
+        from payment
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="selectList" resultMap="PaymentMap">
+        select
+        id, serial
+        from payment
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="serial != null and serial != ''">
+                and serial = #{serial,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert">
+        insert into payment(serial)
+        values (#{serial,jdbcType=VARCHAR})
+    </insert>
+
+    <!--新增所有列-->
+    <insert id="insertSelective">
+        insert into payment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="serial != null and serial != ''">
+                serial,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="serial != null and serial != ''">
+                #{serial,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into payment(serial)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.serial,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into payment(serial)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.serial,jdbcType=VARCHAR})
+        </foreach>
+        on duplicate key update
+        serial = values(serial)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update payment
+        <set>
+            <if test="serial != null and serial != ''">
+                serial = #{serial,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from payment where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+</mapper>
