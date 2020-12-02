@@ -49,7 +49,7 @@ public class PaymentController {
         log.info("{}***查询数据id：{}",serverPort,id);
         log.info("{}***查询数据id：{}",serverPort,id+"aaaaaaaaaaaaaaa");
         Payment payment = this.paymentService.queryById(id);
-        return new CommonResult(200,"SUCCESS",payment);
+        return new CommonResult(serverPort,200,"SUCCESS",payment);
     }
 
 
@@ -57,8 +57,8 @@ public class PaymentController {
     public CommonResult add(@RequestBody Payment payment) {
         int a = this.paymentService.insert(payment);
         log.info("***插入数据：{}",payment);
-        if(a>0)return new CommonResult(200,"SUCCESS",payment);
-        return new CommonResult(444,"FAIL",payment);
+        if(a>0)return new CommonResult(serverPort,200,"SUCCESS",payment);
+        return new CommonResult(serverPort,444,"FAIL",payment);
     }
     @PostMapping("login")
     public Map login(@RequestBody Map<String,String> input){
