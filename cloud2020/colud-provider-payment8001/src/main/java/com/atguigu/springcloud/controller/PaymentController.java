@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * (Payment)表控制层
@@ -48,6 +49,11 @@ public class PaymentController {
     public CommonResult selectOne(@PathVariable("id") Long id) {
         log.info("{}***查询数据id：{}",serverPort,id);
         log.info("{}***查询数据id：{}",serverPort,id+"aaaaaaaaaaaaaaa");
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Payment payment = this.paymentService.queryById(id);
         return new CommonResult(serverPort,200,"SUCCESS",payment);
     }

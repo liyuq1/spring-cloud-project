@@ -29,7 +29,12 @@ public class OrderController {
 
     @GetMapping("/consumer/payment/get/{id}")
     public CommonResult<Payment> getPayment(@PathVariable("id") Long id) {
+        //return restTemplate.getForObject(PAYMENT_URL + "/get/" + id, CommonResult.class);
+        return  paymentController.selectOne(id);
+    }
+
+    @GetMapping("/consumer1/payment/get/{id}")
+    public CommonResult<Payment> getPayment1(@PathVariable("id") Long id) {
         return restTemplate.getForObject(PAYMENT_URL + "/get/" + id, CommonResult.class);
-        //return  paymentController.selectOne(id);
     }
 }
